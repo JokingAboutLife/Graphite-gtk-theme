@@ -259,7 +259,7 @@
 .weather-button,
 .events-button {
   @extend %popover_bubble;
-  padding: $base_padding * 2 !important;
+  padding: $base_padding !important;
   margin: $base_margin 0 0 !important;
 }
 
