@@ -286,7 +286,8 @@ install_gdm() {
   cp -r "${SRC_DIR}/assets/gnome-shell/assets${ELSE_DARK}/"*.svg                             "${THEME_TEMP}/gnome-shell/assets"
   cp -r "${SRC_DIR}/assets/gnome-shell/theme${theme}${ctype}/"*.svg                          "${THEME_TEMP}/gnome-shell/assets"
   cp -r "${SRC_DIR}/assets/gnome-shell/scalable"                                             "${THEME_TEMP}/gnome-shell"
-  cp -r "${SRC_DIR}/assets/gnome-shell/background${gcolor}${ctype}.png"                      "${THEME_TEMP}/gnome-shell/background.png"
+  # cp -r "${SRC_DIR}/assets/gnome-shell/background${gcolor}${ctype}.png"                      "${THEME_TEMP}/gnome-shell/background.png"
+  cp -r "${SRC_DIR}/assets/gnome-shell/wave-nord.png"                                        "${THEME_TEMP}/gnome-shell/background.png"
   mv "${THEME_TEMP}/gnome-shell/assets/process-working.svg"                                  "${THEME_TEMP}/gnome-shell/process-working.svg"
 
   if check_exist "${COMMON_CSS_FILE}"; then # CSS-based theme
