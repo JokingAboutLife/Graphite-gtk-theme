@@ -269,6 +269,14 @@ window.dialog {
 
   &.forecast-card {
     border-width: 1px 0;
+
+    #hourly-forecast-box .forecast-temperature-label {
+      color: white;
+    }
+    
+    #hourly-forecast-box .forecast-temperature-label:backdrop {
+       color: rgba(255,255,255,0.7);
+    }
   }
 
   &.display-container {

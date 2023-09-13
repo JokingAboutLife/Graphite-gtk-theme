@@ -977,6 +977,14 @@ tabbox { // Gnome 40.0
   border-bottom-left-radius: $window-radius;
 }
 
+#hourly-forecast-box .forecast-temperature-label {
+  color: white;
+}
+
+#hourly-forecast-box .forecast-temperature-label:backdrop {
+   color: rgba(255,255,255,0.7);
+}
+
 
 /***************
  * Gnome Music *
