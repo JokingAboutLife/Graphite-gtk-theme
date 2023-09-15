@@ -1,5 +1,5 @@
 # Customizations on the Graphite-gtk-theme 
-> This repository is forked from [vinceliuice/Graphite-gtk-theme](https://github.com/vinceliuice/Graphite-gtk-theme) and Modify some style
+> This repository is forked from [vinceliuice/Graphite-gtk-theme](https://github.com/vinceliuice/Graphite-gtk-theme) and Modify some style for this **nord theme color**
 
 ### My System
 Distribution: **Debian12**
@@ -8,6 +8,7 @@ Desktop: **Gnome 43.6**
 ## Changes for myself
 - fix: hide the shadow when window is maximized or fullscreen
 - fix: adjust the padding of the weather button to make it not overflow
+- change weather temperature label color to white
 - change the background image of login dialog
 - add other source in `my_other_source` folder: such as cursors theme, wallpaper image, grub theme
 
