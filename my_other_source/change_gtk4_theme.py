@@ -50,9 +50,12 @@ if __name__ == '__main__':
             if not theme_exists:
                 print('%s 主题目录不存在' % current_gtk_theme_dir)
                 exit(1)
+            gtk4_theme_exists = False
             for item in os.scandir(current_gtk_theme_dir):
                 if item.is_dir() and GTK4_DIR_NAME == item.name:
                     gtk4_theme_exists = True
+                    break
+            if not gtk4_theme_exists:
                     print('不存在 GTK4 主题文件夹')
                     exit(1)
             # 清空 .config/gtk-4.0 的文件
