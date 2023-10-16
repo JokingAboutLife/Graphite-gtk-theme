@@ -49,20 +49,18 @@ if __name__ == '__main__':
             theme_exists = os.path.exists(current_gtk_theme_dir)
             if not theme_exists:
                 print('%s 主题目录不存在' % current_gtk_theme_dir)
-            gtk4_theme_exists = False
+                exit(1)
             for item in os.scandir(current_gtk_theme_dir):
                 if item.is_dir() and GTK4_DIR_NAME == item.name:
                     gtk4_theme_exists = True
-                    break
-            if gtk4_theme_exists:
-                # 清空 .config/gtk-4.0 的文件
-                print('--------------- 清空 .config/gtk-4.0 文件夹 ---------------'.center(50, '-'))
-                remove_gtk4_theme_link(SYSTEM_GTK4_THEME_DIR)
-                
-                # 将当前主题的 gtk-4.0 文件夹中的文件软链接到 .config/gtk-4.0 文件夹中
-                print('--------------- 开始设置 GTK4 主题的软链接 ---------------'.center(50, '-'))
-                current_theme_gtk4_dir = current_gtk_theme_dir + "/" + GTK4_DIR_NAME
-                make_gtk4_theme_link(SYSTEM_GTK4_THEME_DIR, current_theme_gtk4_dir)
-                print('--------------- 结束 ---------------'.center(50, '-'))
-            else:
-                print('不存在 GTK4 主题文件夹')
+                    print('不存在 GTK4 主题文件夹')
+                    exit(1)
+            # 清空 .config/gtk-4.0 的文件
+            print('--------------- 清空 .config/gtk-4.0 文件夹 ---------------'.center(50, '-'))
+            remove_gtk4_theme_link(SYSTEM_GTK4_THEME_DIR)
+            
+            # 将当前主题的 gtk-4.0 文件夹中的文件软链接到 .config/gtk-4.0 文件夹中
+            print('--------------- 开始设置 GTK4 主题的软链接 ---------------'.center(50, '-'))
+            current_theme_gtk4_dir = current_gtk_theme_dir + "/" + GTK4_DIR_NAME
+            make_gtk4_theme_link(SYSTEM_GTK4_THEME_DIR, current_theme_gtk4_dir)
+            print('--------------- 结束 ---------------'.center(50, '-'))
