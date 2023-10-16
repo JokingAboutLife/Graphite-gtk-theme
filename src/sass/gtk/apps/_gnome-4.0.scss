@@ -3,25 +3,17 @@
 // Nautilus
 //
 .nautilus-window {
-  background-color: $titlebar;
+  @if $sidebar == 'styled' {
+    background-color: $titlebar;
 
-  &:backdrop {
-    background-color: $titlebar-backdrop;
-  }
-
-  headerbar { // reset
-    @if $sidebar == 'styled' {
-      box-shadow: none;
-    } @else {
-      box-shadow: inset 0 -1px $border;
+    &:backdrop {
+      background-color: $titlebar-backdrop;
     }
-  }
 
-  flap.unfolded > placessidebar {
-    background-color: transparent;
-    color: $titlebar-text-secondary;
+    flap.unfolded > placessidebar {
+      background-color: transparent;
+      color: $titlebar-text-secondary;
 
-    @if $sidebar == 'styled' {
       @if $topbar == 'dark' and $variant == 'light' {
         margin: 0;
         background-color: transparent;
@@ -94,44 +86,66 @@
         }
       }
     }
-  }
 
-  @if $variant == 'light' and $topbar == 'dark' {
-    tabbar {
-      &:not(.inline) {
-        .box {
-          background-color: $titlebar-fill;
-        }
-
-        &:backdrop .box {
-          background-color: $titlebar-fill;
-        }
+    @if $variant == 'light' and $topbar == 'dark' {
+      .sidebar-pane {
+        background-color: $titlebar;
+        border: none;
       }
 
-      scrolledwindow:not(.pinned) > tabbox {
-        tab, tab > button.flat {
-          color: $titlebar-text-secondary;
-
-          &:hover {
-            color: $titlebar-text;
+      tabbar {
+        &:not(.inline) {
+          .box {
             background-color: $titlebar-fill;
           }
-
-          &:active, &:checked, &:selected {
-            color: $titlebar-text;
-            background-color: $titlebar-divider;
+  
+          &:backdrop .box {
+            background-color: $titlebar-fill;
           }
-
-          &:disabled {
-            color: $titlebar-text-secondary-disabled;
+        }
+  
+        scrolledwindow:not(.pinned) > tabbox {
+          tab, tab > button.flat {
+            color: $titlebar-text-secondary;
+  
+            &:hover {
+              color: $titlebar-text;
+              background-color: $titlebar-fill;
+            }
+  
+            &:active, &:checked, &:selected {
+              color: $titlebar-text;
+              background-color: $titlebar-divider;
+            }
+  
+            &:disabled {
+              color: $titlebar-text-secondary-disabled;
+            }
           }
         }
       }
     }
   }
 
-  .nautilus-grid-view.view {
+  &:not(.view) headerbar {
+    @if $sidebar == 'normal' {
+      border-bottom: 1px solid $border;
+    }
+  }
+
+  .nautilus-grid-view {
     &, gridview.view {
+      background-color: $base;
+      border-radius: $window-radius - $space-size;
+    }
+
+    @if $variant == 'light' and $topbar == 'dark' {
+      margin: 0 $space-size $space-size 0;
+    }
+  }
+
+  .nautilus-list-view {
+    &, columnview.view {
       background-color: $base;
       border-radius: $window-radius - $space-size;
     }
@@ -191,10 +205,14 @@
 }
 
 #NautilusQueryEditor { // search entry
-  > menubutton > button {
-    min-width: 16px;
-    min-height: 16px;
+  > menubutton {
     margin: 0;
+
+    > button {
+      min-width: 16px;
+      min-height: 16px;
+      margin: 4px 0;
+    }
   }
 
   > text { margin: 0; }
@@ -467,20 +485,26 @@ button:checked:not(:backdrop) .calendar-color-image,
 
 // month/year controls
 datechooser {
-  navigator { // add some space between the two controls
+  padding: $space-size;
+
+  navigator {
     margin-right: $space-size;
     margin-left: $space-size;
     margin-bottom: $space-size;
-  }
 
-  navigator {
     label { font-weight: bold; }
 
-    button, button.image-button {
+    button.flat, button.image-button {
       min-height: $medium-size;
       min-width: $medium-size;
       padding: 0;
     }
+  }
+
+  .current-week {
+    background-color: $fill;
+    color: $text;
+    border-radius: $corner-radius;
   }
 
   // day names and week numbers
@@ -490,7 +514,7 @@ datechooser {
   }
 
   // days
-  button.day {
+  button.day, button.day.flat {
     font-size: 10pt;
     font-weight: normal;
     margin: $space-size / 2;
@@ -523,15 +547,72 @@ datechooser {
     &.other-month {
       &:not(:hover),
       &:backdrop {
-        color: gtkalpha(currentColor, 0.1);
+        color: $text-secondary-disabled;
 
-        dot { background-color: gtkalpha(currentColor, 0.1); }
+        dot { background-color: $text-secondary-disabled; }
       }
 
       &:hover:not(:backdrop) {
         color: $text-disabled;
 
         dot { background-color: $text-disabled; }
+      }
+    }
+  }
+
+  @if $sidebar == 'styled' {
+    .sidebar-pane & {
+      button.day, button.day.flat {
+        &:selected, &:selected:focus, &.today:selected {
+          background-color: on($primary);
+          color: $primary;
+          outline: none;
+          box-shadow: none;
+    
+          dot { background-color: $primary; }
+        }
+
+        &.today {
+          color: on($primary);
+          background-color: on($primary, divider);
+
+          dot { background-color: on($primary); }
+        }
+
+        &.other-month {
+          &:not(:hover),
+          &:backdrop {
+            color: on($primary, secondary-disabled);
+    
+            dot { background-color: on($primary, secondary-disabled); }
+          }
+
+          &:hover:not(:backdrop) {
+            color: on($primary, disabled);
+    
+            dot { background-color: on($primary, disabled); }
+          }
+        }
+      }
+
+      .current-week {
+        background-color: on($primary, fill);
+        color: on($primary);
+      }
+
+      .weeknum, .weekday {
+        color: on($primary, disabled);
+      }
+
+      navigator popover {
+        > arrow,
+        > contents {
+          background-color: lighten($primary, 10%);
+
+          @if $rimless == 'false' {
+            border: 2px solid on($primary);
+          }
+        }
       }
     }
   }
@@ -670,6 +751,8 @@ monthpopover > box {
 
 // Agenda View CSS
 agenda-view list {
+  &.background { background-color: transparent; }
+
   > row {
     padding: 2px $space-size * 2;
   }
@@ -687,25 +770,6 @@ label.no-events {
 searchbutton > popover > arrow {
   background: none;
   border: none;
-}
-
-// Month selector
-datechooser {
-  padding: $space-size;
-
-  .current-week {
-    background-color: $fill;
-    color: $text;
-    border-radius: $corner-radius;
-  }
-}
-
-datechooser.view {
-  button.flat.pill, button.circular.day {
-    min-height: 24px;
-    min-width: 24px;
-    padding: $space-size;
-  }
 }
 
 menubutton.sources-button {
