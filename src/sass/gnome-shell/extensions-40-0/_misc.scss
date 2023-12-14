@@ -27,6 +27,10 @@
       background: none;
       color: $text-disabled;
     }
+    
+    &-databox-values StLabel {
+      margin-top: 3px;
+    }
 
     &-databox-captions {
       background: none;
