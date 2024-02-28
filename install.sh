@@ -113,8 +113,8 @@ install() {
   local size="${5}"
   local ctype="${6}"
 
-  [[ "${color}" == '-Light' ]] && local ELSE_LIGHT="${color}"
-  [[ "${color}" == '-Dark' ]] && local ELSE_DARK="${color}"
+  [[ "${color}" == '-Light' ]] && local ELSE_LIGHT="${color}" && local icon_color="-light"
+  [[ "${color}" == '-Dark' ]] && local ELSE_DARK="${color}" && local icon_color="-dark"
 
   local THEME_DIR="${1}/${2}${3}${4}${5}${6}"
 
@@ -135,7 +135,7 @@ install() {
   echo "[X-GNOME-Metatheme]" >>                                                              "${THEME_DIR}/index.theme"
   echo "GtkTheme=${2}${3}${4}${5}${6}" >>                                                    "${THEME_DIR}/index.theme"
   echo "MetacityTheme=${2}${3}${4}${5}${6}" >>                                               "${THEME_DIR}/index.theme"
-  echo "IconTheme=Tela-circle${ELSE_DARK:-}" >>                                              "${THEME_DIR}/index.theme"
+  echo "IconTheme=Tela-circle${icon_color}" >>                                               "${THEME_DIR}/index.theme"
   echo "CursorTheme=${2}-cursors" >>                                                         "${THEME_DIR}/index.theme"
   echo "ButtonLayout=close,minimize,maximize:menu" >>                                        "${THEME_DIR}/index.theme"
 
@@ -658,6 +658,8 @@ theme_color() {
 }
 
 theme_tweaks() {
+  cp -rf ${SRC_DIR}/sass/_tweaks.scss ${SRC_DIR}/sass/_tweaks-temp.scss
+
   if [[ "$accent" = "true" ]] ; then
     theme_color
   fi
@@ -769,7 +771,6 @@ install_theme() {
   for theme in "${themes[@]}"; do
     for color in "${colors[@]}"; do
       for size in "${sizes[@]}"; do
-        cp -rf ${SRC_DIR}/sass/_tweaks.scss ${SRC_DIR}/sass/_tweaks-temp.scss
         install "${dest:-$DEST_DIR}" "${name:-$THEME_NAME}" "$theme" "$color" "$size" "$ctype"
       done
     done
